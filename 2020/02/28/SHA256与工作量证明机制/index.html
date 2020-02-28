@@ -46,27 +46,31 @@
   };
 </script>
 
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://yoursite.com/index.html">
+  <meta name="description" content="SHA256 算法区块链中所使用的对数据进行加密的算法 如何使用该算法使用 js 编写模拟一个简单的区块链，需要用到 SHA256 算法，该算法位于 crypto-js 下 具体使用步骤如下：  安装好 Node.js 和 npm 工具 创建一个文件夹用于存放我们的项目 在项目文件夹中打开终端，运行 npm install crypto-js  将包安装好之后我们就可以在项目中使用 SHA256">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SHA256与工作量证明机制">
+<meta property="og:url" content="http://yoursite.com/2020/02/28/SHA256%E4%B8%8E%E5%B7%A5%E4%BD%9C%E9%87%8F%E8%AF%81%E6%98%8E%E6%9C%BA%E5%88%B6/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="SHA256 算法区块链中所使用的对数据进行加密的算法 如何使用该算法使用 js 编写模拟一个简单的区块链，需要用到 SHA256 算法，该算法位于 crypto-js 下 具体使用步骤如下：  安装好 Node.js 和 npm 工具 创建一个文件夹用于存放我们的项目 在项目文件夹中打开终端，运行 npm install crypto-js  将包安装好之后我们就可以在项目中使用 SHA256">
 <meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-02-28T13:32:01.987Z">
+<meta property="article:modified_time" content="2020-02-28T02:59:18.928Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://yoursite.com/">
+<link rel="canonical" href="http://yoursite.com/2020/02/28/SHA256%E4%B8%8E%E5%B7%A5%E4%BD%9C%E9%87%8F%E8%AF%81%E6%98%8E%E6%9C%BA%E5%88%B6/">
 
 
 <script id="page-configurations">
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome: true,
-    isPost: false
+    isHome: false,
+    isPost: true
   };
 </script>
 
-  <title>Hexo</title>
+  <title>SHA256与工作量证明机制 | Hexo</title>
   
 
 
@@ -161,107 +165,10 @@
             
 
   <div class="posts-expand">
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/02/28/%E5%85%B3%E7%B3%BB%E6%A8%A1%E5%9E%8B%E7%9A%84%E5%8F%82%E7%85%A7%E5%AE%8C%E6%95%B4%E6%80%A7%E7%BA%A6%E6%9D%9F%E5%B0%8F%E8%AE%B0/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/02/28/%E5%85%B3%E7%B3%BB%E6%A8%A1%E5%9E%8B%E7%9A%84%E5%8F%82%E7%85%A7%E5%AE%8C%E6%95%B4%E6%80%A7%E7%BA%A6%E6%9D%9F%E5%B0%8F%E8%AE%B0/" class="post-title-link" itemprop="url">关系模型的参照完整性约束小记</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-              
-
-              <time title="Created: 2020-02-28 21:32:15 / Modified: 15:41:52" itemprop="dateCreated datePublished" datetime="2020-02-28T21:32:15+08:00">2020-02-28</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
       
-          <h2 id="回顾"><a href="#回顾" class="headerlink" title="回顾"></a>回顾</h2><p>在引入正式话题之前，先对之前的概念进行一下回顾：</p>
-<p>数据模型的三大要素：</p>
-<ul>
-<li>数据结构</li>
-<li>数据操作</li>
-<li>数据的完整性约束条件</li>
-</ul>
-<p>其中<code>数据结构</code>指的是数据之间的关系是怎样的，数据是如何组织起来的，在<code>层次模型</code>中，数据之间的关系是一对一或一对多，对应的是树形结构；在<code>网状模型</code>中，数据之间的关系是多对多，对应的是图结构。如果学过数据结构，应该很好理解。</p>
-<p><code>数据操作</code>就很好理解了，指的就是对数据进行的各种操作，如增删查改等等。</p>
-<p>数据的<code>完整性约束条件</code>比较抽象，片面的说，其指的是数据不能任意取值，其取值范围应该受到一定的约束。例如，一个人的年龄不能小于0，大于200似乎也不像话；人的性别要么是<code>男</code>，要么是<code>女</code>，不能是别的什么值（莫非去过泰国？😂）。像在这种情况下，数据的取值会受到限制，就叫作完整性约束，当然完整性约束条件所针对的不仅仅是数据的取值，还包括数据之间的联系，这就是今天要讨论的重点。</p>
-<h2 id="关系模型的完整性约束"><a href="#关系模型的完整性约束" class="headerlink" title="关系模型的完整性约束"></a>关系模型的完整性约束</h2><p>回顾结束，将目光放到今天的主角——<code>关系模型的完整性约束条件</code>上。对于关系模型来说，完整性约束条件有三种：</p>
-<ul>
-<li>实体完整性</li>
-<li>参照完整性</li>
-<li>用户定义的完整性</li>
-</ul>
-<p>实体完整性及用户定义的完整性都比较简单，我们抛开不谈。我们重点谈一谈这个<code>参照完整性</code>是什么意思。其实在学到这个概念的时候我挺晕的，尤其是参照关系和被参照关系，老是搞不清楚。课本上给出的概念是这样的：</p>
-<blockquote>
-<p>对于某个关系（<code>关系1</code>），如果该关系中的某个属性（组）不是其主码，而该属性（组）恰好是另一个关系（<code>关系2</code>）的主码，则称该属性是<code>关系1</code>的外码（Foreign Key），<code>关系1</code>为参照关系，<code>关系2</code>为被参照关系。</p>
-</blockquote>
-<p>怎么样？是不是挺晕的？其实这个概念说的已经很明白了，只不过不太好理解。举个🌰</p>
-<p>对于<code>学生</code>实体和<code>专业</code>实体来说，其关系如下（主码用下划线标识）：</p>
-<blockquote>
-<p>学生（<u>学号</u>，姓名，性别，专业号，年龄）</p>
-<p>专业（<u>专业号</u>，专业名）</p>
-</blockquote>
-<p>在<code>学生</code>关系中，<code>专业号</code>属性不是其主码，但却是<code>专业</code>关系的主码，所以<code>专业号</code>是<code>学生</code>关系的外码。<code>学生</code>关系是参照关系，<code>专业</code>关系是被参照关系。</p>
-<p>搞清楚外码、参照关系和被参照关系的概念后，我们不禁会问：外码有什么用呢？</p>
-<p>这就回到了我们最初的问题上，我们说在数据的完整性约束条件中，针对数据取值的约束只是其中一方面，数据之间的联系也属于完整性约束条件。而数据之间的联系受到的约束就要通过外码来进行规定。</p>
-<p>还是上面的学生与专业的例子：</p>
-<p>一个学生实体的专业号属性取值要么是专业关系中已存在的专业号，要么是空值（表示还没给该学生分配专业）。这一点在添加学生实体数据的时候要注意。</p>
-<p>而且既然学生关系参照了专业关系，那么专业关系中的专业号就不能随便删除或修改，因为该专业号的值很可能是某个学生专业号属性的取值，如果这时将专业号进行了修改或者直接将这条数据删除了，那么学生数据中的专业号属性就是一个无效的值，学生数据就不完整了，也就是数据的完整性遭到了破坏。</p>
-<blockquote>
-<p>1号学生（12365874，李明，男，5，23）</p>
-<p>5号专业（5，数据库系统概论）</p>
-</blockquote>
-<p>如上所示，1号学生的专业号是5，与5号专业相对应，那么5号专业这条数据的专业号属性就不能进行修改或删除，否则就会导致1号学生数据的不完整（因为学生关系参照了专业关系）。可以看到，外码的定义规定了数据之间联系的约束。</p>
-<p>形象地说，这就好比一个人要有手杖做支撑才能站立（人就是参照关系，手杖就是被参照关系），如果支撑没了，那么这个人就倒了（也就是数据的完整性遭到了破坏）。</p>
-<h2 id="结尾"><a href="#结尾" class="headerlink" title="结尾"></a>结尾</h2><p>说了这么多，主要就是将关系模型的参照完整性的相关概念拿出来又讲了一遍，加了一些我自己的理解与想法。其实概念并不复杂，只是不太好理解（可能只是我理解不了吧😂）。由于自身水平有限，文中难免有错误与疏漏，还望各位大佬不吝赐教，指出问题，大家一起交流探讨，谢谢！🌹🌹🌹</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
   
   
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/02/28/SHA256%E4%B8%8E%E5%B7%A5%E4%BD%9C%E9%87%8F%E8%AF%81%E6%98%8E%E6%9C%BA%E5%88%B6/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -275,8 +182,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/02/28/SHA256%E4%B8%8E%E5%B7%A5%E4%BD%9C%E9%87%8F%E8%AF%81%E6%98%8E%E6%9C%BA%E5%88%B6/" class="post-title-link" itemprop="url">SHA256与工作量证明机制</a>
+          SHA256与工作量证明机制
         </h1>
 
         <div class="post-meta">
@@ -301,7 +207,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="SHA256-算法"><a href="#SHA256-算法" class="headerlink" title="SHA256 算法"></a>SHA256 算法</h2><p>区块链中所使用的对数据进行加密的算法</p>
+        <h2 id="SHA256-算法"><a href="#SHA256-算法" class="headerlink" title="SHA256 算法"></a>SHA256 算法</h2><p>区块链中所使用的对数据进行加密的算法</p>
 <h2 id="如何使用该算法"><a href="#如何使用该算法" class="headerlink" title="如何使用该算法"></a>如何使用该算法</h2><p>使用 <code>js</code> 编写模拟一个简单的区块链，需要用到 SHA256 算法，该算法位于 <code>crypto-js</code> 下</p>
 <p>具体使用步骤如下：</p>
 <ul>
@@ -322,94 +228,36 @@
 <p>值得注意的是，SHA256 算法是不可逆的，也就是说我们给定一个数据，要得到 SHA256 处理后的结果是很简单的，但是如果我们想要根据一个 SHA256 的结果而推算出原数据是不可能的，这就防止了有人作弊的可能，即如果有人得到了一个满足要求的 <code>x</code> ，那么他一定是进行了大量的计算，做了大量的工作，也就是所说的 <code>工作量证明</code></p>
 <p>另外，当有人声称计算出了满足要求的 <code>x</code> 的时候，我们判断该值是否符合要求是很简单的，只要对该值进行一次 SHA256 操作就可以了。求解困难而验证简单，这就是 <code>工作量证明机制</code> 的关键。</p>
 
-      
     </div>
 
     
     
     
+
       <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
 
         
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/01/17/hello-world/">
 
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
-    </span>
 
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/01/17/hello-world/" class="post-title-link" itemprop="url">Hello World</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2020-01-17 19:47:17" itemprop="dateCreated datePublished" datetime="2020-01-17T19:47:17+08:00">2020-01-17</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html" target="_blank" rel="noopener">Deployment</a></p>
-
-      
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/01/17/hello-world/" rel="prev" title="Hello World">
+      <i class="fa fa-chevron-left"></i> Hello World
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/02/28/%E5%85%B3%E7%B3%BB%E6%A8%A1%E5%9E%8B%E7%9A%84%E5%8F%82%E7%85%A7%E5%AE%8C%E6%95%B4%E6%80%A7%E7%BA%A6%E6%9D%9F%E5%B0%8F%E8%AE%B0/" rel="next" title="关系模型的参照完整性约束小记">
+      关系模型的参照完整性约束小记 <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
       </footer>
+    
   </article>
   
   
   
 
   </div>
-
-  
-
 
 
           </div>
@@ -460,6 +308,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#SHA256-算法"><span class="nav-number">1.</span> <span class="nav-text">SHA256 算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如何使用该算法"><span class="nav-number">2.</span> <span class="nav-text">如何使用该算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#区块链中的工作量证明机制"><span class="nav-number">3.</span> <span class="nav-text">区块链中的工作量证明机制</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
